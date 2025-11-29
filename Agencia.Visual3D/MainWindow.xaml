@@ -1,0 +1,74 @@
+﻿<Window x:Class="Agencia.Visual3D.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Mapa 3D del Multiverso"
+        Width="1000" Height="700"
+        Background="Black">
+    <Grid>
+
+        <!-- Fondo tipo cómic, sin atenuar -->
+        <Grid.Background>
+            <ImageBrush ImageSource="Resources/comic_bg.jpg"
+                        Stretch="UniformToFill"
+                        Opacity="1" />
+        </Grid.Background>
+
+        <!-- Vista 3D principal -->
+        <Viewport3D Name="MainViewport"
+                    MouseDown="Viewport_MouseDown"
+                    MouseMove="Viewport_MouseMove"
+                    MouseUp="Viewport_MouseUp"
+                    MouseWheel="Viewport_MouseWheel">
+
+            <!-- Cámara -->
+            <Viewport3D.Camera>
+                <PerspectiveCamera x:Name="MainCamera"
+                                   Position="0,0,80"
+                                   LookDirection="0,0,-80"
+                                   UpDirection="0,1,0"
+                                   FieldOfView="60" />
+            </Viewport3D.Camera>
+
+            <!-- Luz principal -->
+            <ModelVisual3D>
+                <ModelVisual3D.Content>
+                    <DirectionalLight Color="White" Direction="-1,-1,-2" />
+                </ModelVisual3D.Content>
+            </ModelVisual3D>
+
+            <!-- Nodo raíz donde agregamos todo por código -->
+            <ModelVisual3D x:Name="SceneRoot">
+                <!-- Rotación lenta del multiverso completo -->
+                <ModelVisual3D.Transform>
+                    <RotateTransform3D>
+                        <RotateTransform3D.Rotation>
+                            <AxisAngleRotation3D x:Name="SceneRotation"
+                                                 Axis="0,1,0"
+                                                 Angle="0" />
+                        </RotateTransform3D.Rotation>
+                    </RotateTransform3D>
+                </ModelVisual3D.Transform>
+            </ModelVisual3D>
+        </Viewport3D>
+
+        <!-- HUD -->
+        <Border Background="#66000000"
+                VerticalAlignment="Top"
+                Padding="8">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Mapa 3D del Multiverso"
+                           Foreground="White"
+                           FontSize="18"
+                           FontWeight="Bold" />
+                <TextBlock Text="Botón izquierdo: rotar cámara | Rueda: zoom | Botón derecho: seleccionar universo"
+                           Foreground="White"
+                           FontSize="12" />
+                <TextBlock x:Name="InfoText"
+                           Foreground="White"
+                           FontSize="12"
+                           Text="Universo actual: (ninguno)" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
+
